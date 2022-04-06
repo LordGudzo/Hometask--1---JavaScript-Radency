@@ -23,7 +23,9 @@ export const state = {
             {id: "5",  name: "Shoping List5", created: "April 20, 2021", category: "Task", 
             content: "asfasfasf", dates: ""}
         ],        
-        archivedNotes: []  // stores archived objects from body
+        archivedNotes: [],  // stores archived objects from body
+        textInputsArray: ["name", "content"],
+        selectArray: ["Task", "Random Thought", "Idea"]
     }
 }
 
@@ -32,11 +34,13 @@ const ARCHIV = "ARCHIV";
 const UNARCHIV = "UNARCHIV";
 const VIEWING_ARCHIVE = "VIEWING_ARCHIVE";
 const CLOSE_ARCHIVE = "CLOSE_ARCHIVE";
+const ADD_NOTE = "ADD_NOTE";
 
 export const dispatch = (action) => {
  
   switch (action.type) {    
-    case DELETE: {   
+    case DELETE: {
+      debugger   
       state.notes = {
         ...state.notes,   
       body: state.notes.body.filter( e => e.id !== action.id),
@@ -86,6 +90,12 @@ export const dispatch = (action) => {
       drawTables(state.notes.body);  
       break;
     }
+
+    case ADD_NOTE: {
+      state.notes.body.push(action.object);
+      drawTables(state.notes.body);
+      break
+    }
         
   }
 }
@@ -96,6 +106,7 @@ export const archivNoteAC = (id) => ({type: ARCHIV, id: id});
 export const unarchivNoteAC = (id) => ({type: UNARCHIV, id: id});
 export const viewingArchiveAC = () => ({type: VIEWING_ARCHIVE});
 export const closeArchiveAC = () => ({type: CLOSE_ARCHIVE});
+export const addNoteAC = (object) => ({type: ADD_NOTE, object: object});
 
 export const getCategoryIconPath = (category) => {
     switch (category) {

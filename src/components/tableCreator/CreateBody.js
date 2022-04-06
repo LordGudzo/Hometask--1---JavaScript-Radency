@@ -3,6 +3,7 @@ import { getCategoryIconPath } from "../../store/store.js";
 /* Creates the body of the table accoring to value from title and body variable*/
 function createBodyForTable(title, body, className) {
   let tBody = document.createElement('tbody');
+  tBody.classList.add(className + "_tbody")
 
   /* Scroll array with body objects */
   for (let i = 0; i < body.length; i++) {

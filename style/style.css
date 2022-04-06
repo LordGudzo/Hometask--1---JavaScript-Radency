@@ -119,3 +119,16 @@
     height: 20px;
     cursor: pointer;
   }
+
+  .addBtn, .addNoteBtn {
+    width: 100px;
+    height: 20px;
+    background-color: gray;
+    cursor: pointer;
+  }
+  .textInput{
+    border: 2px solid green;
+  }
+  .empty {
+    border: 2px solid red;
+  }

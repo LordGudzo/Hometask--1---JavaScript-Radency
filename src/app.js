@@ -8,6 +8,8 @@ import drawIconsForUnarchiveNote from "./components/buttonCreator/archiveButton/
 import addUnarchiveLogical from "./components/buttonsLogical/UnarchivElementLogical.js";
 import drawIconsForHeader from "./components/buttonCreator/headerButtons/DrawIconsForHeader.js";
 import addCloseArchiveLogical from "./components/buttonsLogical/AddCloseArchiveLogical.js";
+import addCreateNewNoteLogical from "./components/buttonsLogical/createAddNoteLogical/AddCreateNewNoteLogical.js";
+
 
 let drawTables = (body) => {
     document.querySelector("#noteTable").innerHTML='';
@@ -18,6 +20,8 @@ let drawTables = (body) => {
     addDeleteLogical();
     addArchiveLogical();
     addShowArchiveLogical();
+    addCreateNewNoteLogical();
+  
 }
 
 drawTables(state.notes.body);
@@ -35,6 +39,10 @@ export let showArchive = (body) => {
     addCloseArchiveLogical();
 }
 
+
+
+
+ 
 
 
 
