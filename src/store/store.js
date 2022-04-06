@@ -1,4 +1,4 @@
-import drawTables from "../app.js"
+import drawTables, { showArchive } from "../app.js"
 
 export const state = {
     category: {
@@ -12,50 +12,90 @@ export const state = {
     notes: {
         title: {name: "Name", created: "Created", category: "Category", content: "Content", dates: "Dates"},
         body: [
-            {id: "1", isArchived: false, name: "Shoping List", category: "Task", created: "April 20, 2021",
+            {id: "1",  name: "Shoping List1", category: "Task", created: "April 20, 2021",
              content: "asfasfasf", dates: ""},
-            {id: "2", isArchived: false, name: "Shoping List", created: "April 20, 2021", category: "Random Thought",
+            {id: "2",  name: "Shoping List2", created: "April 20, 2021", category: "Random Thought",
              content: "asfasfasf", dates: ""},
-            {id: "3", isArchived: false, name: "Shoping List", created: "April 20, 2021", category: "Task", 
+            {id: "3",  name: "Shoping List3", created: "April 20, 2021", category: "Task", 
             content: "asfasfasf",  dates: ""},
-            {id: "4", isArchived: false, name: "Shoping List", created: "April 20, 2021", category: "Idea", 
+            {id: "4",  name: "Shoping List4", created: "April 20, 2021", category: "Idea", 
             content: "asfasfasf", dates: ""},
-            {id: "5", isArchived: false, name: "Shoping List", created: "April 20, 2021", category: "Task", 
-            content: "asfasfasf", dates: ""},
-        ],
-        deletedNotes: [],
-        isArchived: []
+            {id: "5",  name: "Shoping List5", created: "April 20, 2021", category: "Task", 
+            content: "asfasfasf", dates: ""}
+        ],        
+        archivedNotes: []  // stores archived objects from body
     }
 }
 
 const DELETE = "DELETE";
 const ARCHIV = "ARCHIV";
+const UNARCHIV = "UNARCHIV";
+const VIEWING_ARCHIVE = "VIEWING_ARCHIVE";
+const CLOSE_ARCHIVE = "CLOSE_ARCHIVE";
 
 export const dispatch = (action) => {
-  
-  switch (action.type) {
-    case DELETE: 
-      state.notes.deletedNotes.push(action.id);
+ 
+  switch (action.type) {    
+    case DELETE: {   
       state.notes = {
-        ...state.notes,    
-        body: state.notes.body.filter( e => !state.notes.deletedNotes.includes(e.id))    
+        ...state.notes,   
+      body: state.notes.body.filter( e => e.id !== action.id),
+        archivedNotes: [...state.notes.archivedNotes]   
       } 
-      drawTables();
-    case ARCHIV:     
-      state.notes.isArchived.push(action.id)
+      drawTables(state.notes.body);
+
+      break;
+    }
+      
+    case ARCHIV: {       
       state.notes.body.map(e => {
-        if (state.notes.isArchived.includes(e.id)){
-          e.isArchived = true;
+        if (e.id === action.id){
+          state.notes.archivedNotes.push(e);
         }
       })
-      drawTables();
+      dispatch(deleteNoteAC(action.id))     
+      
+      break;
+    } 
     
+    case UNARCHIV: {
+      let archivedNotesCopy = [];
+
+      state.notes.archivedNotes.map((e) => {
+        if (e.id === action.id) {
+          state.notes.body.push(e);
+        } else {
+          archivedNotesCopy.push(e);
+        }
+      })
+
+      state.notes.archivedNotes = archivedNotesCopy;
+
+      showArchive(state.notes.archivedNotes); 
+      
+      console.log(state.notes.body)
+      break;
+    }
+      
+    case VIEWING_ARCHIVE: {      
+      showArchive(state.notes.archivedNotes);  
+      break;
+    }
+
+    case CLOSE_ARCHIVE: {      
+      drawTables(state.notes.body);  
+      break;
+    }
+        
   }
 }
 
 
 export const deleteNoteAC = (id) => ({type: DELETE, id: id});
-export const archivNoteAC = (id) => ({type: ARCHIV, id: id})
+export const archivNoteAC = (id) => ({type: ARCHIV, id: id});
+export const unarchivNoteAC = (id) => ({type: UNARCHIV, id: id});
+export const viewingArchiveAC = () => ({type: VIEWING_ARCHIVE});
+export const closeArchiveAC = () => ({type: CLOSE_ARCHIVE});
 
 export const getCategoryIconPath = (category) => {
     switch (category) {

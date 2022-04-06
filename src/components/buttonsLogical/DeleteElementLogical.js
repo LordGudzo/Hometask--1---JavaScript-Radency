@@ -1,12 +1,7 @@
-
+import { deleteNoteAC, dispatch } from "../../store/store.js";
 
 let deleteElement = (id) => {
-    dispatch(deleteNoteAC(id));
-    document.querySelector("#noteTable").innerHTML='';
-    DataTable(state.notes.title, state.notes.body, "#noteTable", "notes");
-    createLogicalButtons('#noteTable');
-    addDeleteLogical();
-    addArchiveLogical();    
+    dispatch(deleteNoteAC(id)); 
 }
 
 let addDeleteLogical = () => {
