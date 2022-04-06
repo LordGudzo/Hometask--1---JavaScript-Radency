@@ -3,12 +3,13 @@ import DataTable from "./components/tableCreator/CreateTable.js";
 import createLogicalButtons from "./components/buttonCreator/CreateLogicalButtons.js";
 import addDeleteLogical from "./components/buttonsLogical/DeleteElementLogical.js";
 import addArchiveLogical from "./components/buttonsLogical/ArchivElementLogical.js";
-import addShowArchiveLogical from "./components/buttonsLogical/AddShowArchiveLogical.js";
+import addShowArchiveLogical from "./components/buttonsLogical/ShowArchiveLogical.js";
 import drawIconsForUnarchiveNote from "./components/buttonCreator/archiveButton/DrawIconsForArchive.js";
 import addUnarchiveLogical from "./components/buttonsLogical/UnarchivElementLogical.js";
 import drawIconsForHeader from "./components/buttonCreator/headerButtons/DrawIconsForHeader.js";
-import addCloseArchiveLogical from "./components/buttonsLogical/AddCloseArchiveLogical.js";
+import addCloseArchiveLogical from "./components/buttonsLogical/CloseArchiveLogical.js";
 import addCreateNewNoteLogical from "./components/buttonsLogical/createAddNoteLogical/AddCreateNewNoteLogical.js";
+import addEditElementLogical from "./components/buttonsLogical/editLogical/EditElementLogical.js";
 
 
 let drawTables = (body) => {
@@ -21,7 +22,7 @@ let drawTables = (body) => {
     addArchiveLogical();
     addShowArchiveLogical();
     addCreateNewNoteLogical();
-  
+    addEditElementLogical();
 }
 
 drawTables(state.notes.body);

@@ -120,7 +120,7 @@
     cursor: pointer;
   }
 
-  .addBtn, .addNoteBtn {
+  .addBtn, .addNoteBtn, .sendFormBtn {
     width: 100px;
     height: 20px;
     background-color: gray;

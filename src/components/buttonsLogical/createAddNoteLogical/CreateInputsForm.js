@@ -1,20 +1,24 @@
 import { state } from "../../../store/store.js";
+import createSelectList from "../../common/createSelectList.js";
 
-
-let createInputsForm = () => {
-    let tBody = document.querySelector('.notes_tbody');
+/**
+ * Create text inputs and select depending on state. And 
+ * @returns line for table (tr) with inputs
+ */
+function createInputsForm() {
     let tr = document.createElement('tr');
 
     let textInputsArray = state.notes.textInputsArray;
     createTextInputs(textInputsArray, tr); 
 
-    const selectArray = state.notes.selectArray;
-    let selectList = createSelectList(selectArray);
+    
+    let selectList = createSelectList();
     tr.append(selectList);
 
     let addNoteButton = createAddNoteButton();
     tr.append(addNoteButton)
-    tBody.append(tr);
+    
+    return tr;
 }
 
 let createTextInputs = (textInputsArray, tr) => {    
@@ -27,25 +31,6 @@ let createTextInputs = (textInputsArray, tr) => {
         td.append(input);
         tr.append(td);
       }
-}
-
-let createSelectList = (selectArray) => {
-    let result = document.createElement('td');
-
-    //Create and append select list
-    let selectList = document.createElement("select");
-    selectList.classList.add("category");    
-    
-    //Create and append the options
-    for (let i = 0; i < selectArray.length; i++) {
-        let option = document.createElement("option");
-        option.value =selectArray[i];
-        option.text = selectArray[i];
-        selectList.appendChild(option);
-    }
-    result.appendChild(selectList);
-
-    return result;
 }
 
 let createAddNoteButton = () => {

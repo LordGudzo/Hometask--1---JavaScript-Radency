@@ -6,6 +6,7 @@ let drawIconsForBody = () => {
     for (let i = 0; i< notesBody.length; i++) {
           
         let td = document.createElement('td');
+        td.classList.add('td_icons');
     
         let deleteBtn = drawBtn("delete");    
         let archiveBtn = drawBtn("archiv");       

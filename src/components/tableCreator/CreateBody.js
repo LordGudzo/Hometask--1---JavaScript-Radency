@@ -20,6 +20,7 @@ function createBodyForTable(title, body, className) {
 
       if (body[i].hasOwnProperty(e)) {
         td.innerHTML = body[i][e];
+        td.classList.add("td_" + e)
       } else {
         td.innerHTML = ' ';
       }

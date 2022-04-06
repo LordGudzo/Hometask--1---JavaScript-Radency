@@ -1,8 +1,8 @@
   logical:
-    - add   -
-    - edit  -
+    - add   +
+    - edit  +
     - parser for edit -
-    - count for summary table
+    - count for summary table -
     - remove + 
     - archive +
     - looking archive +
@@ -30,9 +30,4 @@ The summary table is shown on the same page as the notes table.
 There is no need to implement data storage. Simply create a JS variable which stores the data and 
 prepopulate it with 7 notes so that they are shown when the page is reloaded.
 
-Aim to write clean code. 
-Write small functions, pure functions.
-Adhere to the single responsibility principle. Separate the logic of rendering and data processing, 
-ideally to separate files.
 
-Give variables and functions descriptive names.

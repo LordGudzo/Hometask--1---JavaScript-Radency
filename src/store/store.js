@@ -1,4 +1,13 @@
-import drawTables, { showArchive } from "../app.js"
+import drawTables, { showArchive } from "../app.js";
+
+
+const DELETE = "DELETE";
+const ARCHIV = "ARCHIV";
+const UNARCHIV = "UNARCHIV";
+const VIEWING_ARCHIVE = "VIEWING_ARCHIVE";
+const CLOSE_ARCHIVE = "CLOSE_ARCHIVE";
+const ADD_NOTE = "ADD_NOTE";
+const EDIT_NOTE = "EDIT_NOTE";
 
 export const state = {
     category: {
@@ -29,18 +38,9 @@ export const state = {
     }
 }
 
-const DELETE = "DELETE";
-const ARCHIV = "ARCHIV";
-const UNARCHIV = "UNARCHIV";
-const VIEWING_ARCHIVE = "VIEWING_ARCHIVE";
-const CLOSE_ARCHIVE = "CLOSE_ARCHIVE";
-const ADD_NOTE = "ADD_NOTE";
-
-export const dispatch = (action) => {
- 
+export const dispatch = (action) => { 
   switch (action.type) {    
-    case DELETE: {
-      debugger   
+    case DELETE: {        
       state.notes = {
         ...state.notes,   
       body: state.notes.body.filter( e => e.id !== action.id),
@@ -96,6 +96,17 @@ export const dispatch = (action) => {
       drawTables(state.notes.body);
       break
     }
+
+    case EDIT_NOTE: {
+      state.notes.body = state.notes.body.map((e) => {
+        if (e.id === action.id){
+          return action.object;
+        } else {
+          return e
+        }
+      })
+      drawTables(state.notes.body);
+    }
         
   }
 }
@@ -107,6 +118,7 @@ export const unarchivNoteAC = (id) => ({type: UNARCHIV, id: id});
 export const viewingArchiveAC = () => ({type: VIEWING_ARCHIVE});
 export const closeArchiveAC = () => ({type: CLOSE_ARCHIVE});
 export const addNoteAC = (object) => ({type: ADD_NOTE, object: object});
+export const editNoteAC = (object, id) => ({type: EDIT_NOTE, object: object, id: id});
 
 export const getCategoryIconPath = (category) => {
     switch (category) {
