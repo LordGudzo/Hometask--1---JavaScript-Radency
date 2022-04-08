@@ -2,7 +2,7 @@ import { addNoteAC } from "../../../redux/notes_redux.js";
 import store from "../../../store/store.js";
 import checkTextInputs from "../../common/checkTextInputs.js";
 import createObjectForState from "../../common/createObjectForState.js";
-import createInputsForm from "./createInputsForm.js";
+import createInputsForm from "./CreateInputsForm.js";
 
 /**adds logical for CreateNote button. Creates inputs form and then adds value from this form to state */
 function addCreateNewNoteLogical() {
