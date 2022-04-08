@@ -1,4 +1,4 @@
-import { getCategoryIconPath } from "../../store/store.js";
+import store from "../../store/store.js";
 
 /* Creates the body of the table accoring to value from title and body variable*/
 function createBodyForTable(title, body, className) {
@@ -7,35 +7,46 @@ function createBodyForTable(title, body, className) {
 
   /* Scroll array with body objects */
   for (let i = 0; i < body.length; i++) {
-
-    let tr = document.createElement('tr');
-    tr.id = body[i].id;
-    tr.classList.add(className + "_body");
-    let categoryIcon = getIcon(body[i].category);
-    tr.append(categoryIcon);
-    /* Scrolls values from title columns and checks them against the value value from objects with data
-   variable */
-    Object.keys(title).map((e) => {
-      let td = document.createElement('td');
-
-      if (body[i].hasOwnProperty(e)) {
-        td.innerHTML = body[i][e];
-        td.classList.add("td_" + e)
-      } else {
-        td.innerHTML = ' ';
-      }
-
-      tr.append(td)
-    })
-    tBody.append(tr);
+    let line = createLineForTable(title, body, className, i);
+    tBody.append(line);
 
   }
+  
   return tBody;
 }
 
-let getIcon = (category) => {
+//Create line for body of table. Compare title and body columns
+function createLineForTable(title, body, className, i) {
+  let line = document.createElement('tr');
+  line.id = body[i].id; //adds id from store   
+  line.classList.add(className + "_body");
+  
+  //adds icon
+  let categoryIcon = getIcon(body[i].category);
+  line.append(categoryIcon);
+
+  /* Scrolls values from title columns and checks them against the value value from objects with body
+      object */
+  Object.keys(title).map((titleValue) => {
+    let td = document.createElement('td');
+
+    if (body[i].hasOwnProperty(titleValue)) {
+      td.innerHTML = body[i][titleValue];
+      td.classList.add("td_" + titleValue)
+    } else {
+      td.innerHTML = ' ';
+    }
+
+    line.append(td)
+  })
+
+  return line;
+}
+
+// Accepts category, creates td for table, takes puth to icon from store, return td
+function getIcon(category) {
   let td = document.createElement('td');
-  let iconPuth = getCategoryIconPath(category);
+  let iconPuth = store.getCategoryIconPath(category);
   let icon = new Image(20, 20);
   icon.src = iconPuth;
   td.append(icon);

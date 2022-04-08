@@ -1,8 +1,5 @@
-import { deleteNoteAC, dispatch } from "../../store/store.js";
-
-let deleteElement = (id) => {
-    dispatch(deleteNoteAC(id)); 
-}
+import { deleteNoteAC } from "../../redux/notes_redux.js";
+import store from "../../store/store.js";
 
 let addDeleteLogical = () => {
     let notesBody = document.querySelectorAll('.notes_body');
@@ -12,6 +9,10 @@ let addDeleteLogical = () => {
             deleteElement(notesBody[i].id)
         } );
     }
+}
+
+let deleteElement = (id) => {
+    store.dispatch(deleteNoteAC(id)); 
 }
 
 export default addDeleteLogical;

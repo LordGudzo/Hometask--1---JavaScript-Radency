@@ -1,7 +1,5 @@
-import { state } from '../../store/store.js';
-
-function createSelectList() {
-    const selectArray = state.notes.selectArray;
+//creates and returns select input for add and edit forms
+function createSelectList(selectArray) {
     let result = document.createElement('td');
 
     //Create and append select list

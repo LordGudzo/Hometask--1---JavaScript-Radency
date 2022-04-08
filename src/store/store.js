@@ -1,151 +1,53 @@
-import drawTables, { showArchive } from "../app.js";
+import drawTables from "../app.js";
+import notes_redux from "../redux/notes_redux.js";
 
-const DELETE = "DELETE";
-const ARCHIV = "ARCHIV";
-const UNARCHIV = "UNARCHIV";
-const VIEWING_ARCHIVE = "VIEWING_ARCHIVE";
-const CLOSE_ARCHIVE = "CLOSE_ARCHIVE";
-const ADD_NOTE = "ADD_NOTE";
-const EDIT_NOTE = "EDIT_NOTE";
-const SET_DATES = "SET_DATES";
-const SET_SUMMARY_COUNT = "SET_SUMMARY_COUNT";
-
-export const state = {
+let store = {
+  //local state with values for table
+  _state: {
     category: {
-        title: {category: "Note Category", active: "Active", archived: "archived"},
-        body: [
-            {id: "1", category: "Task", active: 0, archived: 0},
-            {id: "2", category: "Random Thought", active: 0, archived: 0},
-            {id: "3", category: "Idea", active: 0, archived: 0}            
-        ]
+      title: { category: "Note Category", active: "Active", archived: "archived" },
+      body: [
+        { id: "1", category: "Task", active: 0, archived: 0 },
+        { id: "2", category: "Random Thought", active: 0, archived: 0 },
+        { id: "3", category: "Idea", active: 0, archived: 0 }
+      ]
     },
     notes: {
-        title: {name: "Name", created: "Created", category: "Category", content: "Content", dates: "Dates"},
-        body: [
-            {id: "1",  name: "Shoping List1", category: "Task", created: "April 20, 2021",
-             content: "3.5/2022", dates: ""},
-            {id: "2",  name: "Shoping List2", created: "April 20, 2021", category: "Random Thought",
-             content: "I am gonna have a dentist appointment on the 3/5/2021, I moved it from 5/5/2021",
-              dates: ""},
-            {id: "3",  name: "Shoping List3", created: "April 20, 2021", category: "Task", 
-            content: "asfasfasf",  dates: ""},
-            {id: "4",  name: "Shoping List4", created: "April 20, 2021", category: "Idea", 
-            content: "asfasfasf", dates: ""},
-            {id: "5",  name: "Shoping List5", created: "April 20, 2021", category: "Task", 
-            content: "asfasfasf", dates: ""}
-        ],        
-        archivedNotes: [],  // stores archived objects from body
-        textInputsArray: ["name", "content"],
-        selectArray: ["Task", "Random Thought", "Idea"]
-    }
-}
-
-export const dispatch = (action) => { 
-  switch (action.type) {    
-    case DELETE: {        
-      state.notes = {
-        ...state.notes,   
-      body: state.notes.body.filter( e => e.id !== action.id),
-        archivedNotes: [...state.notes.archivedNotes]   
-      } 
-      drawTables(state.notes.body);
-
-      break;
-    }
-      
-    case ARCHIV: {       
-      state.notes.body.map(e => {
-        if (e.id === action.id){
-          state.notes.archivedNotes.push(e);
+      title: { name: "Name", created: "Created", category: "Category", content: "Content", dates: "Dates" },
+      body: [
+        {
+          id: "1", name: "Shoping List1", category: "Task", created: "April 20, 2021",
+          content: "3.5/2022", dates: ""
+        },
+        {
+          id: "2", name: "Shoping List2", created: "April 20, 2021", category: "Random Thought",
+          content: "I am gonna have a dentist appointment on the 3/5/2021, I moved it from 5/5/2021",
+          dates: ""
+        },
+        {
+          id: "3", name: "Shoping List3", created: "April 20, 2021", category: "Task",
+          content: "asfasfasf", dates: ""
+        },
+        {
+          id: "4", name: "Shoping List4", created: "April 20, 2021", category: "Idea",
+          content: "asfasfasf", dates: ""
+        },
+        {
+          id: "5", name: "Shoping List5", created: "April 20, 2021", category: "Task",
+          content: "asfasfasf", dates: ""
         }
-      })
-      dispatch(deleteNoteAC(action.id))     
-      
-      break;
-    } 
-    
-    case UNARCHIV: {
-      let archivedNotesCopy = [];
-
-      state.notes.archivedNotes.map((e) => {
-        if (e.id === action.id) {
-          state.notes.body.push(e);
-        } else {
-          archivedNotesCopy.push(e);
-        }
-      })
-
-      state.notes.archivedNotes = archivedNotesCopy;
-
-      showArchive(state.notes.archivedNotes); 
- 
-      break;
+      ],
+      archivedNotes: [],  // stores archived objects from body
+      textInputsArray: ["name", "content"],
+      selectArray: ["Task", "Random Thought", "Idea"]
     }
-      
-    case VIEWING_ARCHIVE: {      
-      showArchive(state.notes.archivedNotes);  
-      break;
-    }
+  },
 
-    case CLOSE_ARCHIVE: {      
-      drawTables(state.notes.body);  
-      break;
-    }
+  getState() {
+    return this._state
+  },
 
-    case ADD_NOTE: {
-      state.notes.body.push(action.object);
-      drawTables(state.notes.body);
-      break
-    }
-
-    case EDIT_NOTE: {
-      state.notes.body = state.notes.body.map((e) => {
-        if (e.id === action.id){
-          return action.object;
-        } else {
-          return e
-        }
-      })
-      drawTables(state.notes.body);
-      break
-    }
-
-    case SET_DATES: {    
-      state.notes.body = state.notes.body.map((e) => {
-        if (e.id === action.id){
-          e.dates = action.dates
-        } 
-        return e
-      })
-     
-      break
-    }
-
-    case SET_SUMMARY_COUNT: {
-      state.category.body = state.category.body.map((e) => {
-        if (e.category === action.category) {
-          action.isActiv ? e.active = action.count : e.archived = action.count
-        }
-
-        return e;
-      })
-    }
-        
-  }
-}
-
-
-export const deleteNoteAC = (id) => ({type: DELETE, id: id});
-export const archivNoteAC = (id) => ({type: ARCHIV, id: id});
-export const unarchivNoteAC = (id) => ({type: UNARCHIV, id: id});
-export const viewingArchiveAC = () => ({type: VIEWING_ARCHIVE});
-export const closeArchiveAC = () => ({type: CLOSE_ARCHIVE});
-export const addNoteAC = (object) => ({type: ADD_NOTE, object: object});
-export const editNoteAC = (object, id) => ({type: EDIT_NOTE, object: object, id: id});
-export const setDatesAC = (id, dates) => ({type: SET_DATES, id: id, dates: dates});
-export const setSummaryCount = (count, category, isActiv) => ({type: SET_SUMMARY_COUNT, count:count, category: category, isActiv: isActiv})
-
-export const getCategoryIconPath = (category) => {
+  getCategoryIconPath(category) {
     switch (category) {
       case "Task":
         return "https://img.icons8.com/external-kiranshastry-solid-kiranshastry/25/000000/external-shopping-cart-interface-kiranshastry-solid-kiranshastry.png";
@@ -153,5 +55,83 @@ export const getCategoryIconPath = (category) => {
         return "https://img.icons8.com/ios-filled/25/000000/development-skill.png";
       case "Idea":
         return "https://img.icons8.com/ios/25/000000/idea--v2.png";
+      default:
+        return "https://img.icons8.com/ios-glyphs/344/question-mark.png";
+    }
+  },
+
+  getButtonIcon(btnName) {
+    switch (btnName) {
+      case "delete":
+        return "https://img.icons8.com/ios-glyphs/20/000000/trash--v1.png";
+      case "archiv":
+        return "https://img.icons8.com/pastel-glyph/20/000000/archive--v4.png";
+      case "edit":
+        return "https://img.icons8.com/ios-glyphs/20/000000/edit--v1.png";
+      default:
+        return "https://img.icons8.com/ios-glyphs/344/question-mark.png";
+    }
+  },
+
+  //count categories in the state and changes state for summary table
+  summaryCount() {
+    let dataStore = this._state.notes.body;
+    let archivStore = this._state.notes.archivedNotes;
+
+    this._state.notes.selectArray.map((category) => {
+      let activ = this._countCategory(category, dataStore);
+      let archiv = this._countCategory(category, archivStore);
+      this._setCount(activ, category, true);
+      this._setCount(archiv, category, false);
+    })
+  },
+
+  // counts numbers category in the store array
+  _countCategory(category, dataStore) {
+    let count = 0;
+    dataStore.map((e) => {
+      if (category === e.category) {
+        count++;
+      }
+    })
+
+    return count;
+  },
+
+ // changes state for summary table
+  _setCount(count, category, isActiv) {
+    this._state.category.body.map((e) => {
+      if (e.category === category) {
+        isActiv ? e.active = count : e.archived = count
+      }
+      return e;
+    })
+  },
+
+  //checks contents in the state and changes data field in the state
+  parserContentData() {
+    let contents = this._state.notes.body;
+    let regExp = /(\d{1}|\d{2})(\/|\.)(\d{1}|\d{2})(\/|\.)\d{4}/g;
+
+    for (let i = 0; i < contents.length; i++) {
+      let textForParser = contents[i].content;
+      let datas = textForParser.match(regExp);
+      if (datas === null) datas = "";
+      contents[i].dates = datas.toString();
+
+    }
+  },
+
+  //I hope this is similar an analogue of the method from redax
+  dispatch(action) {
+    this._state.notes = notes_redux(this._state.notes, action);
+    try {
+      drawTables(this._state.notes.body);
+    } catch (e) {
+      console.log(e)
     }
   }
+}
+
+export default store;
+window.store = store;

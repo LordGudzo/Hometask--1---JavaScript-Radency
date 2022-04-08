@@ -1,4 +1,5 @@
-import { dispatch, addNoteAC } from "../../../store/store.js";
+import { addNoteAC } from "../../../redux/notes_redux.js";
+import store from "../../../store/store.js";
 import checkTextInputs from "../../common/checkTextInputs.js";
 import createObjectForState from "../../common/createObjectForState.js";
 import createInputsForm from "./createInputsForm.js";
@@ -26,7 +27,7 @@ function addCreateNewNoteLogical() {
     
     if (isNoEmpty) {
         let note = createObjectForState();
-        dispatch(addNoteAC(note));
+        store.dispatch(addNoteAC(note));
     }
   }
 

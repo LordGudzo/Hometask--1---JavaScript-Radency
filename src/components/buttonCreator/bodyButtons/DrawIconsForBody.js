@@ -1,4 +1,4 @@
-import drawBtn from "../drawBtn/DrawButton.js";
+import drawBtn from "../../common/DrawButton.js";
 
 let drawIconsForBody = () => {
     let notesBody = document.querySelectorAll('.notes_body');

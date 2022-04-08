@@ -1,4 +1,4 @@
-import { state } from "../../../store/store.js";
+import store from "../../../store/store.js";
 import createSelectList from "../../common/createSelectList.js";
 
 /**
@@ -8,11 +8,11 @@ import createSelectList from "../../common/createSelectList.js";
 function createInputsForm() {
     let tr = document.createElement('tr');
 
-    let textInputsArray = state.notes.textInputsArray;
+    let textInputsArray = store.getState().notes.textInputsArray;
     createTextInputs(textInputsArray, tr); 
 
     
-    let selectList = createSelectList();
+    let selectList = createSelectList(store.getState().notes.selectArray);
     tr.append(selectList);
 
     let addNoteButton = createAddNoteButton();
@@ -20,6 +20,7 @@ function createInputsForm() {
     
     return tr;
 }
+
 
 let createTextInputs = (textInputsArray, tr) => {    
     for (let i = 0; i < textInputsArray.length; i++) {    

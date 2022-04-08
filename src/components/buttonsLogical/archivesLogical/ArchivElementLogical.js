@@ -1,7 +1,8 @@
-import { archivNoteAC, dispatch } from "../../store/store.js";
+import { archivNoteAC } from "../../../redux/notes_redux.js";
+import store from "../../../store/store.js";
 
 let archiveElement = (id) => {
-    dispatch(archivNoteAC(id));
+    store.dispatch(archivNoteAC(id));
 }
 
 let addArchiveLogical = () => {

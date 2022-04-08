@@ -1,17 +1,21 @@
 import createHeaderForTable from "./CreateHeader.js";
 import createBodyForTable from "./CreateBody.js";
 
-/* Main function creates table according to values from config and data variables */
-function DataTable(title, body, parrentNode, className) {
-    let userTable = document.querySelector(parrentNode);
-
+/**
+ * @title values for title (thead)
+ * @body  values for body (tbody)
+ * @parrentNode place from html for table
+ * @className name for table class
+ */
+function CreateTable(title, body, parrentNode, className) {
+    let nodeForTable = document.querySelector(parrentNode);
     let table = document.createElement('table');
     let thead = createHeaderForTable(title, className);
     let tBody = createBodyForTable(title, body, className);   
     table.append(thead);
     table.append(tBody);
-    userTable.appendChild(table);
+    nodeForTable.appendChild(table);
   }  
   
  
-  export default DataTable;
+  export default CreateTable;

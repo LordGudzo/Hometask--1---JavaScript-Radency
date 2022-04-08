@@ -1,8 +1,6 @@
-import { unarchivNoteAC, dispatch } from "../../store/store.js";
+import { unarchivNoteAC } from "../../../redux/notes_redux.js";
+import store from "../../../store/store.js";
 
-let unarchiveElement = (id) => {
-    dispatch(unarchivNoteAC(id));
-}
 
 let addUnarchiveLogical = () => {
     let notesBody = document.querySelectorAll('.notes_body');
@@ -14,5 +12,9 @@ let addUnarchiveLogical = () => {
         } );
     }
 }
+
+let unarchiveElement = (id) => {
+    store.dispatch(unarchivNoteAC(id));
+ }
 
 export default addUnarchiveLogical;

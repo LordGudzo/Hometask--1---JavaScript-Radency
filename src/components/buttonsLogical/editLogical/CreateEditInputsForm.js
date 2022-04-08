@@ -3,7 +3,7 @@ import createSelectList from "../../common/createSelectList.js";
  * Creates 2 text, 1 select inputs and edit button
  * @editForm line for edit 
  */
-function createEditInputsForm(editForm) {
+function createEditInputsForm(editForm, selectArray) {
     let nameForm = editForm.querySelector('.td_name');
     let nameInput = getEditInput(nameForm.innerHTML, "name");
     nameForm.innerHTML = "";
@@ -15,7 +15,7 @@ function createEditInputsForm(editForm) {
     contentForm.append(contenInput);
 
     let categoryForm = editForm.querySelector('.td_category');
-    let categorySelect = createSelectList();
+    let categorySelect = createSelectList(selectArray);
     categoryForm.innerHTML = "";
     categoryForm.append(categorySelect);
 

@@ -1,7 +1,8 @@
 import checkTextInputs from "../../common/checkTextInputs.js";
 import createObjectForState from "../../common/createObjectForState.js";
 import createEditInputsForm from "./CreateEditInputsForm.js";
-import { dispatch, editNoteAC } from "../../../store/store.js";
+import store from "../../../store/store.js";
+import { editNoteAC } from "../../../redux/notes_redux.js";
 
 let addEditElementLogical = () => {
     let notesBody = document.querySelectorAll('.notes_body');
@@ -20,7 +21,7 @@ let addEditElementLogical = () => {
  * @editForm line for edit
  */
 let editNote = (editForm) => { 
-    createEditInputsForm(editForm); 
+    createEditInputsForm(editForm, store.getState().notes.selectArray); 
     let sendEditBtn = document.querySelector('.sendFormBtn');
     sendEditBtn.addEventListener('click', () => sendToState(editForm));        
 }
@@ -31,7 +32,7 @@ function sendToState(editForm) {
    
     if (isNoEmpty) {
         const sendObject = createObjectForState(editForm.id);
-        dispatch(editNoteAC(sendObject, editForm.id));
+        store.dispatch(editNoteAC(sendObject, editForm.id))
     }
   }
 
