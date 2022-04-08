@@ -5,7 +5,7 @@ import createSelectList from "../../common/createSelectList.js";
  * Create text inputs and select depending on state. And 
  * @returns line for table (tr) with inputs
  */
-function createInputsForm() {
+function CreateInputsForm() {
     let tr = document.createElement('tr');
 
     let textInputsArray = store.getState().notes.textInputsArray;
@@ -43,4 +43,4 @@ let createAddNoteButton = () => {
     return td_button;
 }
 
-export default createInputsForm;
+export default CreateInputsForm;
