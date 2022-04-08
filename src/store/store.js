@@ -1,6 +1,5 @@
 import drawTables, { showArchive } from "../app.js";
 
-
 const DELETE = "DELETE";
 const ARCHIV = "ARCHIV";
 const UNARCHIV = "UNARCHIV";
@@ -8,23 +7,26 @@ const VIEWING_ARCHIVE = "VIEWING_ARCHIVE";
 const CLOSE_ARCHIVE = "CLOSE_ARCHIVE";
 const ADD_NOTE = "ADD_NOTE";
 const EDIT_NOTE = "EDIT_NOTE";
+const SET_DATES = "SET_DATES";
+const SET_SUMMARY_COUNT = "SET_SUMMARY_COUNT";
 
 export const state = {
     category: {
         title: {category: "Note Category", active: "Active", archived: "archived"},
         body: [
-            {category: "Task", active: 13, archived: 4},
-            {category: "Random Thought", active: 7, archived: 12},
-            {category: "Idea", active: 0, archived: 0}            
+            {id: "1", category: "Task", active: 0, archived: 0},
+            {id: "2", category: "Random Thought", active: 0, archived: 0},
+            {id: "3", category: "Idea", active: 0, archived: 0}            
         ]
     },
     notes: {
         title: {name: "Name", created: "Created", category: "Category", content: "Content", dates: "Dates"},
         body: [
             {id: "1",  name: "Shoping List1", category: "Task", created: "April 20, 2021",
-             content: "asfasfasf", dates: ""},
+             content: "3.5/2022", dates: ""},
             {id: "2",  name: "Shoping List2", created: "April 20, 2021", category: "Random Thought",
-             content: "asfasfasf", dates: ""},
+             content: "I am gonna have a dentist appointment on the 3/5/2021, I moved it from 5/5/2021",
+              dates: ""},
             {id: "3",  name: "Shoping List3", created: "April 20, 2021", category: "Task", 
             content: "asfasfasf",  dates: ""},
             {id: "4",  name: "Shoping List4", created: "April 20, 2021", category: "Idea", 
@@ -76,8 +78,7 @@ export const dispatch = (action) => {
       state.notes.archivedNotes = archivedNotesCopy;
 
       showArchive(state.notes.archivedNotes); 
-      
-      console.log(state.notes.body)
+ 
       break;
     }
       
@@ -106,6 +107,28 @@ export const dispatch = (action) => {
         }
       })
       drawTables(state.notes.body);
+      break
+    }
+
+    case SET_DATES: {    
+      state.notes.body = state.notes.body.map((e) => {
+        if (e.id === action.id){
+          e.dates = action.dates
+        } 
+        return e
+      })
+     
+      break
+    }
+
+    case SET_SUMMARY_COUNT: {
+      state.category.body = state.category.body.map((e) => {
+        if (e.category === action.category) {
+          action.isActiv ? e.active = action.count : e.archived = action.count
+        }
+
+        return e;
+      })
     }
         
   }
@@ -119,6 +142,8 @@ export const viewingArchiveAC = () => ({type: VIEWING_ARCHIVE});
 export const closeArchiveAC = () => ({type: CLOSE_ARCHIVE});
 export const addNoteAC = (object) => ({type: ADD_NOTE, object: object});
 export const editNoteAC = (object, id) => ({type: EDIT_NOTE, object: object, id: id});
+export const setDatesAC = (id, dates) => ({type: SET_DATES, id: id, dates: dates});
+export const setSummaryCount = (count, category, isActiv) => ({type: SET_SUMMARY_COUNT, count:count, category: category, isActiv: isActiv})
 
 export const getCategoryIconPath = (category) => {
     switch (category) {

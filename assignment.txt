@@ -1,8 +1,8 @@
   logical:
     - add   +
     - edit  +
-    - parser for edit -
-    - count for summary table -
+    - parser for edit +
+    - count for summary table +
     - remove + 
     - archive +
     - looking archive +

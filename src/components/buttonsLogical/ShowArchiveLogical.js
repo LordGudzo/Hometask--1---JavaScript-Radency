@@ -1,7 +1,7 @@
 import { viewingArchiveAC, dispatch } from "../../store/store.js";
 
 let addShowArchiveLogical = () => {
-    let showArchiveBtn = document.querySelector('.notes').querySelector('.archiv');
+    let showArchiveBtn = document.querySelector('.notes').querySelector('.th_icon');
 
     let deleteElement = () => {   
         dispatch(viewingArchiveAC());

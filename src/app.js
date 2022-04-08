@@ -1,4 +1,4 @@
-import { viewingArchiveAC, dispatch, state } from "./store/store.js";
+import { state } from "./store/store.js";
 import DataTable from "./components/tableCreator/CreateTable.js";  
 import createLogicalButtons from "./components/buttonCreator/CreateLogicalButtons.js";
 import addDeleteLogical from "./components/buttonsLogical/DeleteElementLogical.js";
@@ -10,9 +10,11 @@ import drawIconsForHeader from "./components/buttonCreator/headerButtons/DrawIco
 import addCloseArchiveLogical from "./components/buttonsLogical/CloseArchiveLogical.js";
 import addCreateNewNoteLogical from "./components/buttonsLogical/createAddNoteLogical/AddCreateNewNoteLogical.js";
 import addEditElementLogical from "./components/buttonsLogical/editLogical/EditElementLogical.js";
+import parserContentData from "./components/common/parserContentData.js";
+import summaryCount from "./components/common/countForSummaryTable.js";
 
 
-let drawTables = (body) => {
+let drawTables = (body) => {    
     document.querySelector("#noteTable").innerHTML='';
     document.querySelector("#summaryTable").innerHTML='';
     DataTable(state.notes.title, body, "#noteTable", "notes");
@@ -22,10 +24,28 @@ let drawTables = (body) => {
     addArchiveLogical();
     addShowArchiveLogical();
     addCreateNewNoteLogical();
-    addEditElementLogical();
+    addEditElementLogical();  
+    parserContentData();
+    summaryCount();
+    reDrawAfterParser(state.notes.body)      
 }
 
+ let reDrawAfterParser = (body) => {    
+    document.querySelector("#noteTable").innerHTML='';
+    document.querySelector("#summaryTable").innerHTML='';
+    DataTable(state.notes.title, body, "#noteTable", "notes");
+    DataTable(state.category.title, state.category.body, "#summaryTable", "summary");
+    createLogicalButtons('#noteTable');
+    addDeleteLogical();
+    addArchiveLogical();
+    addShowArchiveLogical();
+    addCreateNewNoteLogical();
+    addEditElementLogical();  
+         
+} 
+
 drawTables(state.notes.body);
+
 
 export default drawTables;
 

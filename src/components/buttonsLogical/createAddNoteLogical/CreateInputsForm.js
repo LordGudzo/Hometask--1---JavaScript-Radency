@@ -34,10 +34,12 @@ let createTextInputs = (textInputsArray, tr) => {
 }
 
 let createAddNoteButton = () => {
+    let td_button = document.createElement('td')
     let button = document.createElement('button');
     button.textContent = "Add Note";
     button.classList.add("addNoteBtn");
-    return button;
+    td_button.append(button)
+    return td_button;
 }
 
 export default createInputsForm;

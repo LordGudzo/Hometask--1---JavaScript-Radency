@@ -20,6 +20,7 @@ function createEditInputsForm(editForm) {
     categoryForm.append(categorySelect);
 
     let icons = editForm.querySelector('.td_icons');
+    icons.classList.remove("td_icons")
     let sendFormBtn = createEditButton();
     icons.innerHTML = "";
     icons.append(sendFormBtn);
